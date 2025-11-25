@@ -37,7 +37,10 @@ body {
 .dashboard-grid {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+}
+
+.dashboard-grid .section-card {
+  margin-bottom: 1rem;
 }
 
 .section-card {
@@ -77,7 +80,10 @@ body {
 
 .metrics-grid {
   display: grid;
-  gap: 0.75rem;
+}
+
+.metrics-grid .metric-card {
+  margin: 0.375rem;
 }
 .metrics-grid.plano-grid {
   grid-template-columns: repeat(5, 1fr);
