@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'docs'),
     filename: 'bundle.js'
@@ -9,7 +9,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
@@ -18,6 +18,7 @@ module.exports = {
     ]
   },
   resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
     alias: {
       'react': 'preact/compat',
       'react-dom': 'preact/compat'

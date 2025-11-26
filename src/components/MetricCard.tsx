@@ -1,6 +1,14 @@
 import { h } from 'preact';
+import { MetricStatus } from '../types';
 
-function MetricCard(props) {
+interface MetricCardProps {
+  label: string;
+  value: string;
+  status: MetricStatus;
+  highlight?: boolean;
+}
+
+function MetricCard(props: MetricCardProps) {
   var classes = 'metric-card';
 
   if (props.status === 'success') {

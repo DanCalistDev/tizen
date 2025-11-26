@@ -1,8 +1,9 @@
 import { h } from 'preact';
 import SectionCard from './SectionCard';
+import { Section } from '../types';
 
 // Dados do dashboard - você pode modificar aqui ou buscar de uma API
-var dashboardData = [
+var dashboardData: Section[] = [
   {
     title: 'Plano',
     metrics: [
@@ -68,7 +69,7 @@ var dashboardData = [
 function App() {
   return h('div', { class: 'dashboard' },
     h('div', { class: 'dashboard-grid' },
-      dashboardData.map(function(section, index) {
+      dashboardData.map(function(section: Section, index: number) {
         return h(SectionCard, {
           key: index,
           title: section.title,
