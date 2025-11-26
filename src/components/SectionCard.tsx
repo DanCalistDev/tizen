@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import MetricCard from './MetricCard';
 import { Metric } from '../types';
 
@@ -7,22 +6,24 @@ interface SectionCardProps {
   metrics: Metric[];
 }
 
-function SectionCard(props: SectionCardProps) {
-  return h('section', { class: 'section-card' },
-    h('div', { class: 'section-header' },
-      h('h2', null, props.title)
-    ),
-    h('div', { class: 'metrics-grid plano-grid' },
-      props.metrics.map(function(metric: Metric, index: number) {
-        return h(MetricCard, {
-          key: index,
-          label: metric.label,
-          value: metric.value,
-          status: metric.status,
-          highlight: metric.highlight
-        });
-      })
-    )
+function SectionCard({ title, metrics }: SectionCardProps) {
+  return (
+    <section className="section-card">
+      <div className="section-header">
+        <h2>{title}</h2>
+      </div>
+      <div className="metrics-grid plano-grid">
+        {metrics.map((metric, index) => (
+          <MetricCard
+            key={index}
+            label={metric.label}
+            value={metric.value}
+            status={metric.status}
+            highlight={metric.highlight}
+          />
+        ))}
+      </div>
+    </section>
   );
 }
 
