@@ -5,63 +5,100 @@ import { Section } from '../types';
 // Dados do dashboard - você pode modificar aqui ou buscar de uma API
 const dashboardData: Section[] = [
   {
-    title: 'Plano',
+    title: 'PLANO',
     metrics: [
-      { label: 'HB CONG', value: '83/89', status: 'success' },
-      { label: 'CCR EXT', value: '42/67', status: 'warning', highlight: true },
-      { label: 'KO INT', value: '64/86', status: 'success' },
-      { label: 'KO EXT', value: '67/89', status: 'success' },
-      { label: 'TIME LINE', value: '87/89', status: 'success' }
+      { label: 'HIB CONG', value: '01/09', status: 'success' },
+      { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
+      { label: 'KO INT', value: '05/09', status: 'success' },
+      { label: 'KO EXT', value: '07/09', status: 'success' },
+      { label: 'TIME LINE', value: '07/09', status: 'success' }
     ]
   },
   {
-    title: 'Plano 2',
+    title: 'ARQUITETURA',
     metrics: [
-      { label: 'HB CONG', value: '83/89', status: 'success' },
-      { label: 'CCR EXT', value: '42/67', status: 'warning', highlight: true },
-      { label: 'KO INT', value: '64/86', status: 'success' },
-      { label: 'KO EXT', value: '67/89', status: 'success' },
-      { label: 'TIME LINE', value: '87/89', status: 'success' }
+      { label: 'PREMS TEC', value: '07/09', status: 'success' },
+      { label: 'TIME LINE', value: '07/09', status: 'success' },
+      { label: 'INSPEC OBRA', value: '10/09', status: 'success' },
+      { label: 'LEV FIS', value: '20/09 22/09', status: 'warning' },
+      { label: 'EP 1', value: '12/09 15/09', status: 'warning' },
+      { label: 'EP 2', value: '25/09 29/09', status: 'warning' },
+      { label: 'AP', value: '20/10', status: 'success' },
+      { label: 'PLANO SD', value: '20/10', status: 'success' },
+      { label: 'BASES EMIT.', value: '20/10 23/10', status: 'warning' },
+      { label: 'RECEB. SD', value: '31/10 02/11', status: 'warning' },
+      { label: 'APROV SD', value: 'PREV 05/11', status: 'danger', highlight: true }
     ]
   },
   {
-    title: 'Plano 3',
+    title: 'COMPRAS',
     metrics: [
-      { label: 'HB CONG', value: '83/89', status: 'success' },
-      { label: 'CCR EXT', value: '42/67', status: 'warning', highlight: true },
-      { label: 'KO INT', value: '64/86', status: 'success' },
-      { label: 'KO EXT', value: '67/89', status: 'success' },
-      { label: 'TIME LINE', value: '87/89', status: 'success' }
+      { label: 'SAF VALID', value: '07/09', status: 'success' },
+      { label: 'PLANO COMP', value: '07/09', status: 'success' },
+      { label: 'INSPEC OBRA', value: '10/09', status: 'success' },
+      { label: 'COMP 1', value: '20/09 22/09', status: 'warning' },
+      { label: 'COMP 2', value: '25/09', status: 'success' },
+      { label: 'COMP 3', value: '27/09', status: 'success' },
+      { label: 'COMP 4', value: 'PREV 12/10', status: 'danger', highlight: true },
+      { label: 'CMPT PROJ', value: 'PREV 12/10', status: 'danger', highlight: true },
+      { label: 'EX', value: '30/10', status: 'neutral' }
     ]
   },
   {
-    title: 'Plano 4',
+    title: 'PROJ. TÉCN',
     metrics: [
-      { label: 'HB CONG', value: '83/89', status: 'success' },
-      { label: 'CCR EXT', value: '42/67', status: 'warning', highlight: true },
-      { label: 'KO INT', value: '64/86', status: 'success' },
-      { label: 'KO EXT', value: '67/89', status: 'success' },
-      { label: 'TIME LINE', value: '87/89', status: 'success' }
+      { label: 'PJ TEC CONTR', value: '07/09', status: 'warning' },
+      { label: 'TIME LINE', value: '07/09', status: 'success' },
+      { label: 'INSPEC OBRA', value: '10/09', status: 'success' },
+      { label: 'KO TEC', value: '10/09', status: 'success' },
+      { label: 'ARQ BASES', value: '22/09 30/09', status: 'warning' },
+      { label: 'EP TEC', value: '30/09 02/10', status: 'warning' },
+      { label: 'REUN TEC', value: 'PREV 30/09', status: 'danger', highlight: true },
+      { label: 'AP TEC', value: 'PREV 05/10', status: 'danger', highlight: true },
+      { label: 'CMPT PROJ', value: 'PREV 12/10', status: 'danger', highlight: true },
+      { label: '1ª RN FORNEC', value: '12/10', status: 'neutral' },
+      { label: 'EX TEC', value: '02/11', status: 'neutral' }
     ]
   },
   {
-    title: 'Plano 5',
+    title: 'OBRA',
     metrics: [
-      { label: 'HB CONG', value: '83/89', status: 'success' },
-      { label: 'CCR EXT', value: '42/67', status: 'warning', highlight: true },
-      { label: 'KO INT', value: '64/86', status: 'success' },
-      { label: 'KO EXT', value: '67/89', status: 'success' },
-      { label: 'TIME LINE', value: '87/89', status: 'success' }
+      { label: 'MACRO OBRA', value: '10/09', status: 'neutral' },
+      { label: 'QSMS DOCS', value: '10/09', status: 'neutral' },
+      { label: 'PRJ DISPON', value: '30/09', status: 'neutral' },
+      { label: 'OBRA VISTOR', value: '30/09', status: 'neutral' },
+      { label: 'CRONO OBRA', value: '02/10', status: 'neutral' },
+      { label: 'PASS. OBRA', value: '05/10', status: 'neutral' },
+      { label: 'ETAPA 1', value: '12/11', status: 'neutral' },
+      { label: 'ETAPA 2', value: '22/11', status: 'neutral' },
+      { label: 'ETAPA 3', value: '02/12', status: 'neutral' },
+      { label: 'ETAPA 4', value: '12/12', status: 'neutral' }
     ]
   },
   {
-    title: 'Plano 6',
+    title: 'RECORRÊNCIAS',
     metrics: [
-      { label: 'HB CONG', value: '83/89', status: 'success' },
-      { label: 'CCR EXT', value: '42/67', status: 'warning', highlight: true },
-      { label: 'KO INT', value: '64/86', status: 'success' },
-      { label: 'KO EXT', value: '67/89', status: 'success' },
-      { label: 'TIME LINE', value: '87/89', status: 'success' }
+      { label: 'RGO', value: '20/10', status: 'success' },
+      { label: 'R.SEM CLIENTE', value: '22/09', status: 'success' },
+      { label: 'COM. SEM.', value: '22/09', status: 'success' }
+    ]
+  },
+  {
+    title: 'ENCERRAMENTO',
+    metrics: [
+      { label: 'ACEITE PROV', value: '31/01', status: 'neutral' },
+      { label: 'EMISS BOOK', value: '04/02', status: 'neutral' },
+      { label: 'FECH. FINANC', value: '04/02', status: 'neutral' },
+      { label: 'ACEITE DEFIN', value: '05/02', status: 'neutral' }
+    ]
+  },
+  {
+    title: 'INDICADORES',
+    metrics: [
+      { label: 'Satisf', value: '20/10', status: 'warning' }, // Smiley Amarelo
+      { label: 'QSMS', value: '20/10', status: 'success' },  // Smiley Verde
+      { label: 'EVOLUÇ OBRA', value: '45%', status: 'neutral' },
+      { label: 'DIAS PENDÊN', value: '123', status: 'neutral' }
     ]
   }
 ];
