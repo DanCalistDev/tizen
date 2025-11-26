@@ -1,0 +1,15 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["last 10 years", "> 0.1%"]
+      },
+      "modules": false
+    }]
+  ],
+  "plugins": [
+    ["transform-react-jsx", {
+      "pragma": "h"
+    }]
+  ]
+}
