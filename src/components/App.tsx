@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import SectionCard from './SectionCard';
 import { Section } from '../types';
 
@@ -66,18 +67,16 @@ const dashboardData: Section[] = [
 ];
 
 function App() {
-  return (
-    <div className="dashboard">
-      <div className="dashboard-grid">
-        {dashboardData.map((section, index) => (
-          <SectionCard
-            key={index}
-            title={section.title}
-            metrics={section.metrics}
-          />
-        ))}
-      </div>
-    </div>
+  return h('div', { class: 'dashboard' },
+    h('div', { class: 'dashboard-grid' },
+      dashboardData.map((section: Section, index: number) => {
+        return h(SectionCard, {
+          key: index,
+          title: section.title,
+          metrics: section.metrics
+        });
+      })
+    )
   );
 }
 
