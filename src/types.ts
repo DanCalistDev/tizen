@@ -5,9 +5,12 @@ export interface Metric {
   value: string;
   status: MetricStatus;
   highlight?: boolean;
+  headerText?: string;
+  hasArrowDown?: boolean;
 }
 
 export interface Section {
   title: string;
   metrics: Metric[];
+  startColumn?: number;
 }

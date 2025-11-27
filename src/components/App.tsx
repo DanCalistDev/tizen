@@ -16,8 +16,8 @@ const firstRowBlocks: HeaderBlock[] = [
       { label: 'HIB CONG', value: '01/09', status: 'success' },
       { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
       { label: 'KO INT', value: '05/09', status: 'success' },
-      { label: 'KO EXT', value: '07/09', status: 'success' },
-      { label: 'TIME LINE', value: '07/09', status: 'success' },
+      { label: 'KO EXT', value: '07/09', status: 'success', hasArrowDown: true },
+      { label: 'TIME LINE', value: '07/09', status: 'success', headerText: 'PLANO' },
     ]
   },
   {
@@ -46,6 +46,7 @@ const firstRowBlocks: HeaderBlock[] = [
 const dashboardData: Section[] = [
   {
     title: 'ARQUITETURA',
+    startColumn: 4, // Começa na coluna 4 (alinhado com KO EXT)
     metrics: [
       { label: 'PREMS TEC', value: '07/09', status: 'success' },
       { label: 'TIME LINE', value: '07/09', status: 'success' },
@@ -165,7 +166,9 @@ function App() {
                   label: metric.label,
                   value: metric.value,
                   status: metric.status,
-                  highlight: metric.highlight
+                  highlight: metric.highlight,
+                  headerText: metric.headerText,
+                  hasArrowDown: metric.hasArrowDown
                 });
               }),
               hasArrow ? h('div', { class: 'arrow' }, '→') : null,
@@ -184,6 +187,7 @@ function App() {
       ),
       // Linhas do meio (4 linhas)
       dashboardData.map((section: Section, index: number) => {
+        const emptySlots = section.startColumn ? section.startColumn - 1 : 0;
         return h('div', { class: 'swimlane', key: index },
           h('div', { class: 'swimlane-label' },
             h('span', null, section.title)
@@ -192,13 +196,19 @@ function App() {
             class: 'swimlane-cards',
             style: `grid-template-columns: repeat(${maxColumns}, 1fr)`
           },
+            // Espaços vazios antes dos cards
+            Array.from({ length: emptySlots }).map((_, i) => {
+              return h('div', { class: 'empty-slot', key: `empty-${i}` });
+            }),
             section.metrics.map((metric, mIndex) => {
               return h(MetricCard, {
                 key: mIndex,
                 label: metric.label,
                 value: metric.value,
                 status: metric.status,
-                highlight: metric.highlight
+                highlight: metric.highlight,
+                headerText: metric.headerText,
+                hasArrowDown: metric.hasArrowDown
               });
             })
           )

@@ -6,6 +6,8 @@ interface MetricCardProps {
   value: string;
   status: MetricStatus;
   highlight?: boolean;
+  headerText?: string;
+  hasArrowDown?: boolean;
 }
 
 function MetricCard(props: MetricCardProps) {
@@ -25,9 +27,13 @@ function MetricCard(props: MetricCardProps) {
     classes += ' highlight';
   }
 
-  return h('div', { class: classes },
-    h('div', { class: 'metric-label' }, props.label),
-    h('div', { class: 'metric-value' }, props.value)
+  return h('div', { class: 'metric-card-wrapper' },
+    props.headerText ? h('div', { class: 'metric-header-text' }, props.headerText) : null,
+    h('div', { class: classes },
+      h('div', { class: 'metric-label' }, props.label),
+      h('div', { class: 'metric-value' }, props.value)
+    ),
+    props.hasArrowDown ? h('div', { class: 'arrow-down' }, '↓') : null
   );
 }
 
