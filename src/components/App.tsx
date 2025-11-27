@@ -150,11 +150,15 @@ function App() {
       h('div', { class: 'swimlane swimlane-triple' },
         firstRowBlocks.map((block, bIndex) => {
           const hasArrow = block.arrowMetrics && block.arrowMetrics.length > 0;
+          const totalCards = block.metrics.length + (block.arrowMetrics ? block.arrowMetrics.length + 1 : 0);
           return h('div', { class: 'swimlane-third', key: bIndex },
             block.title ? h('div', { class: 'swimlane-label' },
               h('span', null, block.title)
             ) : h('div', { class: 'swimlane-label swimlane-label-empty' }),
-            h('div', { class: 'swimlane-cards-row' },
+            h('div', {
+              class: 'swimlane-cards',
+              style: `grid-template-columns: repeat(${totalCards}, 1fr)`
+            },
               block.metrics.map((metric, mIndex) => {
                 return h(MetricCard, {
                   key: mIndex,

@@ -120,18 +120,6 @@ body {
   padding: 2px;
 }
 
-/* Cards em row (primeira linha - horizontal) */
-.swimlane-cards-row {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: 4px;
-}
-
-.swimlane-cards-row .metric-card {
-  margin: 2px;
-}
-
 /* Seta */
 .arrow {
   display: flex;
@@ -140,7 +128,6 @@ body {
   font-size: 18px;
   font-weight: bold;
   color: #06b6d4;
-  padding: 0 6px;
 }
 
 /* Metric Cards */
