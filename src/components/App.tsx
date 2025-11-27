@@ -38,17 +38,17 @@ const gridData: GridRow[] = [
   {
     title: 'ARQUITETURA',
     cards: [
-      { col: 6, label: 'PREMS TEC', value: '07/09', status: 'success' },
-      { col: 7, label: 'TIME LINE', value: '07/09', status: 'success' },
-      { col: 8, label: 'INSPEC OBRA', value: '10/09', status: 'success' },
-      { col: 9, label: 'LEV FIS', value: '20/09 22/09', status: 'warning' },
-      { col: 10, label: 'EP 1', value: '12/09 15/09', status: 'warning' },
-      { col: 11, label: 'EP 2', value: '25/09 29/09', status: 'warning' },
-      { col: 12, label: 'AP', value: '20/10', status: 'success' },
-      { col: 13, label: 'PLANO SD', value: '20/10', status: 'success' },
-      { col: 14, label: 'BASES EMIT.', value: '20/10 23/10', status: 'warning' },
-      { col: 15, label: 'RECEB. SD', value: '31/10 02/11', status: 'warning' },
-      { col: 16, label: 'APROV SD', value: 'PREV 05/11', status: 'danger', highlight: true }
+      { col: 4, label: 'PREMS TEC', value: '07/09', status: 'success' },
+      { col: 5, label: 'TIME LINE', value: '07/09', status: 'success' },
+      { col: 6, label: 'INSPEC OBRA', value: '10/09', status: 'success' },
+      { col: 7, label: 'LEV FIS', value: '20/09 22/09', status: 'warning' },
+      { col: 8, label: 'EP 1', value: '12/09 15/09', status: 'warning' },
+      { col: 9, label: 'EP 2', value: '25/09 29/09', status: 'warning' },
+      { col: 10, label: 'AP', value: '20/10', status: 'success' },
+      { col: 11, label: 'PLANO SD', value: '20/10', status: 'success' },
+      { col: 12, label: 'BASES EMIT.', value: '20/10 23/10', status: 'warning' },
+      { col: 13, label: 'RECEB. SD', value: '31/10 02/11', status: 'warning' },
+      { col: 14, label: 'APROV SD', value: 'PREV 05/11', status: 'danger', highlight: true }
     ]
   },
   {
