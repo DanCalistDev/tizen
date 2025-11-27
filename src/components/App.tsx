@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import MetricCard from './MetricCard';
-import { Section, Metric, MetricStatus } from '../types';
+import { Section, Metric } from '../types';
 
 interface HeaderBlock {
   title: string;
@@ -8,7 +8,7 @@ interface HeaderBlock {
   arrowMetrics?: Metric[];
 }
 
-// Primeira linha: 3 blocos com space-between
+// Primeira linha: 3 blocos (igual à última linha, mas com 3)
 const firstRowBlocks: HeaderBlock[] = [
   {
     title: '', // Sem título
@@ -26,7 +26,6 @@ const firstRowBlocks: HeaderBlock[] = [
       { label: 'PLANO SD', value: '22/10', status: 'success' },
       { label: 'BASES EMIT', value: '20/10 23/10', status: 'warning', highlight: true },
     ],
-    // Cards com seta
     arrowMetrics: [
       { label: 'RECEB SD', value: '31/10 02/11', status: 'warning' },
       { label: 'APROV SD', value: 'PREV 05/11', status: 'success' },
@@ -121,7 +120,7 @@ const dashboardData: Section[] = [
 ];
 
 // Última linha dividida: RECORRÊNCIAS | ENCERRAMENTO
-const lastRowSections = [
+const lastRowSections: HeaderBlock[] = [
   {
     title: 'RECORRÊNCIAS',
     metrics: [
@@ -147,18 +146,15 @@ const maxColumns = 22;
 function App() {
   return h('div', { class: 'dashboard' },
     h('div', { class: 'flowchart' },
-      // Primeira linha: 3 blocos com space-between
-      h('div', { class: 'swimlane swimlane-header' },
+      // Primeira linha: 3 blocos (igual à última, mas com 3)
+      h('div', { class: 'swimlane swimlane-triple' },
         firstRowBlocks.map((block, bIndex) => {
           const hasArrow = block.arrowMetrics && block.arrowMetrics.length > 0;
-          return h('div', {
-            class: `header-block ${block.title ? '' : 'no-title'}`,
-            key: bIndex
-          },
-            block.title ? h('div', { class: 'block-label' },
+          return h('div', { class: 'swimlane-third', key: bIndex },
+            block.title ? h('div', { class: 'swimlane-label' },
               h('span', null, block.title)
-            ) : null,
-            h('div', { class: 'block-cards' },
+            ) : h('div', { class: 'swimlane-label swimlane-label-empty' }),
+            h('div', { class: 'swimlane-cards-row' },
               block.metrics.map((metric, mIndex) => {
                 return h(MetricCard, {
                   key: mIndex,
@@ -169,7 +165,7 @@ function App() {
                 });
               }),
               hasArrow ? h('div', { class: 'arrow' }, '→') : null,
-              hasArrow ? block.arrowMetrics.map((metric, mIndex) => {
+              hasArrow ? block.arrowMetrics!.map((metric, mIndex) => {
                 return h(MetricCard, {
                   key: `arrow-${mIndex}`,
                   label: metric.label,
