@@ -25,87 +25,39 @@ body {
   overflow: hidden;
 }
 
-/* Layout Flowchart / Swimlanes */
-.flowchart {
+/* Grid Dashboard */
+.grid-dashboard {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.swimlane {
+.grid-row {
   display: flex;
   flex: 1;
   min-height: 0;
-  background: #16213e;
-  border-radius: 4px;
-  overflow: visible;
   margin-bottom: 2px;
-  position: relative;
 }
 
-.swimlane:last-child {
+.grid-row:last-child {
   margin-bottom: 0;
 }
 
-/* Linha com 3 blocos (primeira linha) */
-.swimlane-triple {
-  display: flex;
-  background: transparent;
-}
-
-.swimlane-third {
-  flex: 1;
-  display: flex;
-  background: #16213e;
-  border-radius: 4px;
-  overflow: visible;
-  margin-right: 2px;
-  position: relative;
-}
-
-.swimlane-third:last-child {
-  margin-right: 0;
-}
-
-/* Linha com 2 blocos (última linha) */
-.swimlane-split {
-  display: flex;
-  background: transparent;
-}
-
-.swimlane-split .swimlane-half:first-child {
-  margin-right: 2px;
-}
-
-.swimlane-half {
-  flex: 1;
-  display: flex;
-  background: #16213e;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-/* Labels */
-.swimlane-label {
+/* Labels das linhas */
+.row-label {
   width: 100px;
   min-width: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #0f3460;
-  border-right: 3px solid #06b6d4;
+  border-radius: 4px;
+  margin-right: 2px;
   padding: 4px;
 }
 
-.swimlane-label-empty {
-  background: transparent;
-  border-right: none;
-  width: 8px;
-  min-width: 8px;
-}
-
-.swimlane-label span {
-  font-size: 11px;
+.row-label span {
+  font-size: 10px;
   font-weight: 700;
   color: #06b6d4;
   text-transform: uppercase;
@@ -114,30 +66,58 @@ body {
   word-break: break-word;
 }
 
-/* Cards em grid (linhas do meio) */
-.swimlane-cards {
-  flex: 1;
-  display: grid;
-  align-items: stretch;
-  padding: 2px;
+/* Labels múltiplos (primeira e última linha) */
+.row-labels-multi {
+  width: 100px;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 2px;
 }
 
-/* Seta */
-.arrow {
+.row-label-segment {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  font-weight: bold;
+  background: #0f3460;
+  border-radius: 4px;
+  margin-bottom: 1px;
+  padding: 2px;
+  font-size: 9px;
+  font-weight: 700;
   color: #06b6d4;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.row-label-segment:last-child {
+  margin-bottom: 0;
+}
+
+.row-label-segment.empty {
+  background: transparent;
+}
+
+/* Grid de 22 colunas */
+.row-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(22, 1fr);
+  background: #16213e;
+  border-radius: 4px;
+  padding: 2px;
+  align-items: stretch;
+}
+
+.grid-cell {
+  display: flex;
+  align-items: stretch;
 }
 
 /* Metric Cards */
-.empty-slot {
-  /* Espaço vazio para alinhar colunas */
-}
-
 .metric-card {
+  flex: 1;
   background: #0f3460;
   border-radius: 4px;
   padding: 4px;
@@ -149,42 +129,7 @@ body {
   justify-content: center;
   min-width: 0;
   position: relative;
-}
-
-/* Texto PLANO em cima do card (position absolute) */
-.metric-card.has-header {
   overflow: visible;
-}
-
-.metric-header-text {
-  position: absolute;
-  top: -12px;
-  left: 0;
-  right: 0;
-  font-size: 8px;
-  font-weight: 700;
-  color: #06b6d4;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-/* Seta para baixo (passa entre seções) */
-.metric-card.has-arrow-down {
-  overflow: visible;
-}
-
-.arrow-down {
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  font-weight: bold;
-  color: #06b6d4;
-  text-align: center;
-  white-space: pre;
-  line-height: 0.8;
-  z-index: 10;
 }
 
 .metric-card.status-success {
@@ -211,8 +156,36 @@ body {
   box-shadow: 0 0 8px rgba(255, 193, 7, 0.6);
 }
 
+/* Texto em cima do card (PLANO) */
+.metric-header-text {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  font-size: 8px;
+  font-weight: 700;
+  color: #06b6d4;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Seta para baixo */
+.arrow-down {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: bold;
+  color: #06b6d4;
+  text-align: center;
+  white-space: pre;
+  line-height: 0.8;
+  z-index: 10;
+}
+
 .metric-label {
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 2px;
@@ -225,7 +198,7 @@ body {
 }
 
 .metric-value {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   color: #ffffff;
   line-height: 1;

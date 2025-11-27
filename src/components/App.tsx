@@ -1,244 +1,196 @@
 import { h } from 'preact';
 import MetricCard from './MetricCard';
-import { Section, Metric } from '../types';
+import { Metric } from '../types';
 
-interface HeaderBlock {
-  title: string;
-  metrics: Metric[];
-  arrowMetrics?: Metric[];
+// Card com posição na coluna
+interface GridCard extends Metric {
+  col: number; // Coluna (1-22)
 }
 
-// Primeira linha: 3 blocos (igual à última linha, mas com 3)
-const firstRowBlocks: HeaderBlock[] = [
-  {
-    title: '', // Sem título
-    metrics: [
-      { label: 'HIB CONG', value: '01/09', status: 'success' },
-      { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
-      { label: 'KO INT', value: '05/09', status: 'success', hasArrowDown: true },
-      { label: 'KO EXT', value: '07/09', status: 'success', hasArrowDown: true },
-      { label: 'TIME LINE', value: '07/09', status: 'success', headerText: 'PLANO' },
-    ]
-  },
-  {
-    title: 'SD',
-    metrics: [
-      { label: 'PLANO SD', value: '22/10', status: 'success' },
-      { label: 'BASES EMIT', value: '20/10 23/10', status: 'warning', highlight: true },
-    ],
-    arrowMetrics: [
-      { label: 'RECEB SD', value: '31/10 02/11', status: 'warning' },
-      { label: 'APROV SD', value: 'PREV 05/11', status: 'success' },
-    ]
-  },
-  {
-    title: 'INDICADORES',
-    metrics: [
-      { label: 'Satisf', value: '20/10', status: 'warning' },
-      { label: 'QSMS', value: '20/10', status: 'success' },
-      { label: 'EVOLUÇ OBRA', value: '45%', status: 'neutral' },
-      { label: 'DIAS PENDÊN', value: '123', status: 'neutral' }
-    ]
-  }
-];
+// Linha do grid
+interface GridRow {
+  title: string;
+  cards: GridCard[];
+}
 
-// Linhas do meio (4 linhas)
-const dashboardData: Section[] = [
+// Dados do dashboard - cada card tem sua coluna definida
+const gridData: GridRow[] = [
+  {
+    title: '', // Primeira linha sem título
+    cards: [
+      { col: 1, label: 'HIB CONG', value: '01/09', status: 'success' },
+      { col: 2, label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
+      { col: 3, label: 'KO INT', value: '05/09', status: 'success', hasArrowDown: true },
+      { col: 4, label: 'KO EXT', value: '07/09', status: 'success', hasArrowDown: true },
+      { col: 5, label: 'TIME LINE', value: '07/09', status: 'success', headerText: 'PLANO' },
+      // SD - começa na coluna 8
+      { col: 8, label: 'PLANO SD', value: '22/10', status: 'success' },
+      { col: 9, label: 'BASES EMIT', value: '20/10 23/10', status: 'warning', highlight: true },
+      { col: 10, label: 'RECEB SD', value: '31/10 02/11', status: 'warning' },
+      { col: 11, label: 'APROV SD', value: 'PREV 05/11', status: 'success' },
+      // INDICADORES - canto direito
+      { col: 19, label: 'Satisf', value: '20/10', status: 'warning' },
+      { col: 20, label: 'QSMS', value: '20/10', status: 'success' },
+      { col: 21, label: 'EVOLUÇ OBRA', value: '45%', status: 'neutral' },
+      { col: 22, label: 'DIAS PENDÊN', value: '123', status: 'neutral' },
+    ]
+  },
   {
     title: 'ARQUITETURA',
-    startColumn: 4, // Começa na coluna 4 (alinhado com KO EXT)
-    metrics: [
-      { label: 'PREMS TEC', value: '07/09', status: 'success' },
-      { label: 'TIME LINE', value: '07/09', status: 'success' },
-      { label: 'INSPEC OBRA', value: '10/09', status: 'success' },
-      { label: 'LEV FIS', value: '20/09 22/09', status: 'warning' },
-      { label: 'EP 1', value: '12/09 15/09', status: 'warning' },
-      { label: 'EP 2', value: '25/09 29/09', status: 'warning' },
-      { label: 'AP', value: '20/10', status: 'success' },
-      { label: 'PLANO SD', value: '20/10', status: 'success' },
-      { label: 'BASES EMIT.', value: '20/10 23/10', status: 'warning' },
-      { label: 'RECEB. SD', value: '31/10 02/11', status: 'warning' },
-      { label: 'APROV SD', value: 'PREV 05/11', status: 'danger', highlight: true }
+    cards: [
+      { col: 4, label: 'PREMS TEC', value: '07/09', status: 'success' },
+      { col: 5, label: 'TIME LINE', value: '07/09', status: 'success' },
+      { col: 6, label: 'INSPEC OBRA', value: '10/09', status: 'success' },
+      { col: 7, label: 'LEV FIS', value: '20/09 22/09', status: 'warning' },
+      { col: 8, label: 'EP 1', value: '12/09 15/09', status: 'warning' },
+      { col: 9, label: 'EP 2', value: '25/09 29/09', status: 'warning' },
+      { col: 10, label: 'AP', value: '20/10', status: 'success' },
+      { col: 11, label: 'PLANO SD', value: '20/10', status: 'success' },
+      { col: 12, label: 'BASES EMIT.', value: '20/10 23/10', status: 'warning' },
+      { col: 13, label: 'RECEB. SD', value: '31/10 02/11', status: 'warning' },
+      { col: 14, label: 'APROV SD', value: 'PREV 05/11', status: 'danger', highlight: true }
     ]
   },
   {
     title: 'COMPRAS',
-    metrics: [
-      { label: 'SAF VALID', value: '07/09', status: 'success' },
-      { label: 'PLANO COMP', value: '07/09', status: 'success' },
-      { label: 'INSPEC OBRA', value: '10/09', status: 'success' },
-      { label: 'COMP 1', value: '20/09 22/09', status: 'warning' },
-      { label: 'COMP 2', value: '25/09', status: 'success' },
-      { label: 'COMP 3', value: '27/09', status: 'success' },
-      { label: 'COMP 4', value: 'PREV 12/10', status: 'danger', highlight: true },
-      { label: 'CMPT PROJ', value: 'PREV 12/10', status: 'danger', highlight: true },
-      { label: 'EX', value: '30/10', status: 'neutral' }
+    cards: [
+      { col: 4, label: 'SAF VALID', value: '07/09', status: 'success' },
+      { col: 5, label: 'PLANO COMP', value: '07/09', status: 'success' },
+      { col: 6, label: 'INSPEC OBRA', value: '10/09', status: 'success' },
+      { col: 7, label: 'COMP 1', value: '20/09 22/09', status: 'warning' },
+      { col: 8, label: 'COMP 2', value: '25/09', status: 'success' },
+      { col: 9, label: 'COMP 3', value: '27/09', status: 'success' },
+      { col: 10, label: 'COMP 4', value: 'PREV 12/10', status: 'danger', highlight: true },
+      { col: 11, label: 'CMPT PROJ', value: 'PREV 12/10', status: 'danger', highlight: true },
+      { col: 12, label: 'EX', value: '30/10', status: 'neutral' }
     ]
   },
   {
     title: 'PROJ. TÉCN',
-    startColumn: 3, // Começa na coluna 3 (alinhado com KO INT)
-    metrics: [
-      { label: 'PJ TEC CONTR', value: '07/09', status: 'warning' },
-      { label: 'TIME LINE', value: '07/09', status: 'success' },
-      { label: 'INSPEC OBRA', value: '10/09', status: 'success' },
-      { label: 'KO TEC', value: '10/09', status: 'success' },
-      { label: 'ARQ BASES', value: '22/09 30/09', status: 'warning' },
-      { label: 'EP TEC', value: '30/09 02/10', status: 'warning' },
-      { label: 'REUN TEC', value: 'PREV 30/09', status: 'danger', highlight: true },
-      { label: 'AP TEC', value: 'PREV 05/10', status: 'danger', highlight: true },
-      { label: 'CMPT PROJ', value: 'PREV 12/10', status: 'danger', highlight: true },
-      { label: '1ª RN FORNEC', value: '12/10', status: 'neutral' },
-      { label: 'EX TEC', value: '02/11', status: 'neutral' }
+    cards: [
+      { col: 3, label: 'PJ TEC CONTR', value: '07/09', status: 'warning' },
+      { col: 4, label: 'TIME LINE', value: '07/09', status: 'success' },
+      { col: 5, label: 'INSPEC OBRA', value: '10/09', status: 'success' },
+      { col: 6, label: 'KO TEC', value: '10/09', status: 'success' },
+      { col: 7, label: 'ARQ BASES', value: '22/09 30/09', status: 'warning' },
+      { col: 8, label: 'EP TEC', value: '30/09 02/10', status: 'warning' },
+      { col: 9, label: 'REUN TEC', value: 'PREV 30/09', status: 'danger', highlight: true },
+      { col: 10, label: 'AP TEC', value: 'PREV 05/10', status: 'danger', highlight: true },
+      { col: 11, label: 'CMPT PROJ', value: 'PREV 12/10', status: 'danger', highlight: true },
+      { col: 12, label: '1ª RN FORNEC', value: '12/10', status: 'neutral' },
+      { col: 13, label: 'EX TEC', value: '02/11', status: 'neutral' }
     ]
   },
   {
     title: 'OBRA',
-    metrics: [
-      { label: 'MACRO OBRA', value: '10/09', status: 'neutral' },
-      { label: 'QSMS DOCS', value: '10/09', status: 'neutral' },
-      { label: 'PRJ DISPON', value: '30/09', status: 'neutral' },
-      { label: 'OBRA VISTOR', value: '30/09', status: 'neutral' },
-      { label: 'CRONO OBRA', value: '02/10', status: 'neutral' },
-      { label: 'PASS. OBRA', value: '05/10', status: 'neutral' },
-      { label: 'ETAPA 1', value: '12/11', status: 'neutral' },
-      { label: 'ETAPA 2', value: '22/11', status: 'neutral' },
-      { label: 'ETAPA 3', value: '02/12', status: 'neutral' },
-      { label: 'ETAPA 4', value: '12/12', status: 'neutral' },
-      { label: 'ETAPA 5', value: '15/12', status: 'neutral' },
-      { label: 'ETAPA 6', value: '18/12', status: 'neutral' },
-      { label: 'ETAPA 7', value: '20/12', status: 'neutral' },
-      { label: 'ETAPA 8', value: '22/12', status: 'neutral' },
-      { label: 'ETAPA 9', value: '25/12', status: 'neutral' },
-      { label: 'ETAPA 10', value: '28/12', status: 'neutral' },
-      { label: 'ETAPA 11', value: '30/12', status: 'neutral' },
-      { label: 'ETAPA 12', value: '02/01', status: 'neutral' },
-      { label: 'ETAPA 13', value: '05/01', status: 'neutral' },
-      { label: 'ETAPA 14', value: '08/01', status: 'neutral' },
-      { label: 'ETAPA 15', value: '10/01', status: 'neutral' },
-      { label: 'ETAPA 16', value: '12/01', status: 'neutral' }
-    ]
-  }
-];
-
-// Última linha dividida: RECORRÊNCIAS | ENCERRAMENTO
-const lastRowSections: HeaderBlock[] = [
-  {
-    title: 'RECORRÊNCIAS',
-    metrics: [
-      { label: 'RGO', value: '20/10', status: 'success' },
-      { label: 'R.SEM CLIENTE', value: '22/09', status: 'success' },
-      { label: 'COM. SEM.', value: '22/09', status: 'success' }
+    cards: [
+      { col: 1, label: 'MACRO OBRA', value: '10/09', status: 'neutral' },
+      { col: 2, label: 'QSMS DOCS', value: '10/09', status: 'neutral' },
+      { col: 3, label: 'PRJ DISPON', value: '30/09', status: 'neutral' },
+      { col: 4, label: 'OBRA VISTOR', value: '30/09', status: 'neutral' },
+      { col: 5, label: 'CRONO OBRA', value: '02/10', status: 'neutral' },
+      { col: 6, label: 'PASS. OBRA', value: '05/10', status: 'neutral' },
+      { col: 7, label: 'ETAPA 1', value: '12/11', status: 'neutral' },
+      { col: 8, label: 'ETAPA 2', value: '22/11', status: 'neutral' },
+      { col: 9, label: 'ETAPA 3', value: '02/12', status: 'neutral' },
+      { col: 10, label: 'ETAPA 4', value: '12/12', status: 'neutral' },
+      { col: 11, label: 'ETAPA 5', value: '15/12', status: 'neutral' },
+      { col: 12, label: 'ETAPA 6', value: '18/12', status: 'neutral' },
+      { col: 13, label: 'ETAPA 7', value: '20/12', status: 'neutral' },
+      { col: 14, label: 'ETAPA 8', value: '22/12', status: 'neutral' },
+      { col: 15, label: 'ETAPA 9', value: '25/12', status: 'neutral' },
+      { col: 16, label: 'ETAPA 10', value: '28/12', status: 'neutral' },
+      { col: 17, label: 'ETAPA 11', value: '30/12', status: 'neutral' },
+      { col: 18, label: 'ETAPA 12', value: '02/01', status: 'neutral' },
+      { col: 19, label: 'ETAPA 13', value: '05/01', status: 'neutral' },
+      { col: 20, label: 'ETAPA 14', value: '08/01', status: 'neutral' },
+      { col: 21, label: 'ETAPA 15', value: '10/01', status: 'neutral' },
+      { col: 22, label: 'ETAPA 16', value: '12/01', status: 'neutral' }
     ]
   },
   {
-    title: 'ENCERRAMENTO',
-    metrics: [
-      { label: 'ACEITE PROV', value: '31/01', status: 'neutral' },
-      { label: 'EMISS BOOK', value: '04/02', status: 'neutral' },
-      { label: 'FECH. FINANC', value: '04/02', status: 'neutral' },
-      { label: 'ACEITE DEFIN', value: '05/02', status: 'neutral' }
+    title: 'RECORRÊNCIAS',
+    cards: [
+      { col: 1, label: 'RGO', value: '20/10', status: 'success' },
+      { col: 2, label: 'R.SEM CLIENTE', value: '22/09', status: 'success' },
+      { col: 3, label: 'COM. SEM.', value: '22/09', status: 'success' },
+      // ENCERRAMENTO - segunda metade
+      { col: 12, label: 'ACEITE PROV', value: '31/01', status: 'neutral' },
+      { col: 13, label: 'EMISS BOOK', value: '04/02', status: 'neutral' },
+      { col: 14, label: 'FECH. FINANC', value: '04/02', status: 'neutral' },
+      { col: 15, label: 'ACEITE DEFIN', value: '05/02', status: 'neutral' }
     ]
   }
 ];
 
-// Número fixo de colunas (baseado em OBRA com 22 cards)
-const maxColumns = 22;
+// Labels das seções especiais na primeira e última linha
+const specialLabels = {
+  firstRow: [
+    { col: 1, span: 5, label: '' }, // Sem título
+    { col: 8, span: 4, label: 'SD' },
+    { col: 19, span: 4, label: 'INDICADORES' }
+  ],
+  lastRow: [
+    { col: 1, span: 11, label: 'RECORRÊNCIAS' },
+    { col: 12, span: 11, label: 'ENCERRAMENTO' }
+  ]
+};
+
+const totalColumns = 22;
 
 function App() {
   return h('div', { class: 'dashboard' },
-    h('div', { class: 'flowchart' },
-      // Primeira linha: 3 blocos (igual à última, mas com 3)
-      h('div', { class: 'swimlane swimlane-triple' },
-        firstRowBlocks.map((block, bIndex) => {
-          const hasArrow = block.arrowMetrics && block.arrowMetrics.length > 0;
-          const totalCards = block.metrics.length + (block.arrowMetrics ? block.arrowMetrics.length + 1 : 0);
-          return h('div', { class: 'swimlane-third', key: bIndex },
-            block.title ? h('div', { class: 'swimlane-label' },
-              h('span', null, block.title)
-            ) : h('div', { class: 'swimlane-label swimlane-label-empty' }),
-            h('div', {
-              class: 'swimlane-cards',
-              style: `grid-template-columns: repeat(${totalCards}, 1fr)`
-            },
-              block.metrics.map((metric, mIndex) => {
-                return h(MetricCard, {
-                  key: mIndex,
-                  label: metric.label,
-                  value: metric.value,
-                  status: metric.status,
-                  highlight: metric.highlight,
-                  headerText: metric.headerText,
-                  hasArrowDown: metric.hasArrowDown
-                });
-              }),
-              hasArrow ? h('div', { class: 'arrow' }, '→') : null,
-              hasArrow ? block.arrowMetrics!.map((metric, mIndex) => {
-                return h(MetricCard, {
-                  key: `arrow-${mIndex}`,
-                  label: metric.label,
-                  value: metric.value,
-                  status: metric.status,
-                  highlight: metric.highlight
-                });
-              }) : null
+    h('div', { class: 'grid-dashboard' },
+      gridData.map((row, rowIndex) => {
+        const isFirstRow = rowIndex === 0;
+        const isLastRow = rowIndex === gridData.length - 1;
+
+        return h('div', { class: 'grid-row', key: rowIndex },
+          // Label da linha (coluna 0)
+          isFirstRow ? (
+            // Primeira linha: múltiplos labels
+            h('div', { class: 'row-labels-multi' },
+              specialLabels.firstRow.map((sl, i) =>
+                h('div', {
+                  class: `row-label-segment ${sl.label ? '' : 'empty'}`,
+                  key: i
+                }, sl.label)
+              )
             )
-          );
-        })
-      ),
-      // Linhas do meio (4 linhas)
-      dashboardData.map((section: Section, index: number) => {
-        const emptySlots = section.startColumn ? section.startColumn - 1 : 0;
-        return h('div', { class: 'swimlane', key: index },
-          h('div', { class: 'swimlane-label' },
-            h('span', null, section.title)
+          ) : isLastRow ? (
+            // Última linha: labels divididos
+            h('div', { class: 'row-labels-multi' },
+              specialLabels.lastRow.map((sl, i) =>
+                h('div', { class: 'row-label-segment', key: i }, sl.label)
+              )
+            )
+          ) : (
+            // Linhas normais
+            h('div', { class: 'row-label' },
+              h('span', null, row.title)
+            )
           ),
-          h('div', {
-            class: 'swimlane-cards',
-            style: `grid-template-columns: repeat(${maxColumns}, 1fr)`
-          },
-            // Espaços vazios antes dos cards
-            Array.from({ length: emptySlots }).map((_, i) => {
-              return h('div', { class: 'empty-slot', key: `empty-${i}` });
-            }),
-            section.metrics.map((metric, mIndex) => {
-              return h(MetricCard, {
-                key: mIndex,
-                label: metric.label,
-                value: metric.value,
-                status: metric.status,
-                highlight: metric.highlight,
-                headerText: metric.headerText,
-                hasArrowDown: metric.hasArrowDown
-              });
+          // Grid de 22 colunas
+          h('div', { class: 'row-grid' },
+            row.cards.map((card, cardIndex) => {
+              return h('div', {
+                class: 'grid-cell',
+                style: `grid-column: ${card.col}`,
+                key: cardIndex
+              },
+                h(MetricCard, {
+                  label: card.label,
+                  value: card.value,
+                  status: card.status,
+                  highlight: card.highlight,
+                  headerText: card.headerText,
+                  hasArrowDown: card.hasArrowDown
+                })
+              );
             })
           )
         );
-      }),
-      // Última linha dividida (RECORRÊNCIAS | ENCERRAMENTO)
-      h('div', { class: 'swimlane swimlane-split' },
-        lastRowSections.map((section, sIndex) => {
-          return h('div', { class: 'swimlane-half', key: sIndex },
-            h('div', { class: 'swimlane-label' },
-              h('span', null, section.title)
-            ),
-            h('div', {
-              class: 'swimlane-cards',
-              style: `grid-template-columns: repeat(${Math.floor(maxColumns / 2)}, 1fr)`
-            },
-              section.metrics.map((metric, mIndex) => {
-                return h(MetricCard, {
-                  key: mIndex,
-                  label: metric.label,
-                  value: metric.value,
-                  status: metric.status,
-                  highlight: metric.highlight
-                });
-              })
-            )
-          );
-        })
-      )
+      })
     )
   );
 }
