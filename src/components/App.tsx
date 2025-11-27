@@ -1,27 +1,35 @@
 import { h } from 'preact';
 import MetricCard from './MetricCard';
-import { Section } from '../types';
+import { Section, Metric, MetricStatus } from '../types';
 
-// Primeira linha dividida: SD | INDICADORES
-const firstRowSections = [
+interface HeaderBlock {
+  title: string;
+  metrics: Metric[];
+  arrowMetrics?: Metric[];
+}
+
+// Primeira linha: 3 blocos com space-between
+const firstRowBlocks: HeaderBlock[] = [
   {
-    title: 'SD',
+    title: '', // Sem título
     metrics: [
       { label: 'HIB CONG', value: '01/09', status: 'success' },
       { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
       { label: 'KO INT', value: '05/09', status: 'success' },
       { label: 'KO EXT', value: '07/09', status: 'success' },
       { label: 'TIME LINE', value: '07/09', status: 'success' },
-      { label: 'HIB CONG', value: '01/09', status: 'success' },
-      { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
-      { label: 'KO INT', value: '05/09', status: 'success' },
-      { label: 'KO EXT', value: '07/09', status: 'success' },
-      { label: 'TIME LINE', value: '07/09', status: 'success' },
-      { label: 'HIB CONG', value: '01/09', status: 'success' },
-      { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
-      { label: 'KO INT', value: '05/09', status: 'success' },
-      { label: 'KO EXT', value: '07/09', status: 'success' },
-      { label: 'TIME LINE', value: '07/09', status: 'success' },
+    ]
+  },
+  {
+    title: 'SD',
+    metrics: [
+      { label: 'PLANO SD', value: '22/10', status: 'success' },
+      { label: 'BASES EMIT', value: '20/10 23/10', status: 'warning', highlight: true },
+    ],
+    // Cards com seta
+    arrowMetrics: [
+      { label: 'RECEB SD', value: '31/10 02/11', status: 'warning' },
+      { label: 'APROV SD', value: 'PREV 05/11', status: 'success' },
     ]
   },
   {
@@ -35,7 +43,7 @@ const firstRowSections = [
   }
 ];
 
-// Linhas do meio (5 linhas)
+// Linhas do meio (4 linhas)
 const dashboardData: Section[] = [
   {
     title: 'ARQUITETURA',
@@ -139,18 +147,19 @@ const maxColumns = 22;
 function App() {
   return h('div', { class: 'dashboard' },
     h('div', { class: 'flowchart' },
-      // Primeira linha dividida (SD | INDICADORES)
-      h('div', { class: 'swimlane swimlane-split' },
-        firstRowSections.map((section, sIndex) => {
-          return h('div', { class: 'swimlane-half', key: sIndex },
-            h('div', { class: 'swimlane-label' },
-              h('span', null, section.title)
-            ),
-            h('div', {
-              class: 'swimlane-cards',
-              style: `grid-template-columns: repeat(${Math.floor(maxColumns / 2)}, 1fr)`
-            },
-              section.metrics.map((metric, mIndex) => {
+      // Primeira linha: 3 blocos com space-between
+      h('div', { class: 'swimlane swimlane-header' },
+        firstRowBlocks.map((block, bIndex) => {
+          const hasArrow = block.arrowMetrics && block.arrowMetrics.length > 0;
+          return h('div', {
+            class: `header-block ${block.title ? '' : 'no-title'}`,
+            key: bIndex
+          },
+            block.title ? h('div', { class: 'block-label' },
+              h('span', null, block.title)
+            ) : null,
+            h('div', { class: 'block-cards' },
+              block.metrics.map((metric, mIndex) => {
                 return h(MetricCard, {
                   key: mIndex,
                   label: metric.label,
@@ -158,7 +167,17 @@ function App() {
                   status: metric.status,
                   highlight: metric.highlight
                 });
-              })
+              }),
+              hasArrow ? h('div', { class: 'arrow' }, '→') : null,
+              hasArrow ? block.arrowMetrics.map((metric, mIndex) => {
+                return h(MetricCard, {
+                  key: `arrow-${mIndex}`,
+                  label: metric.label,
+                  value: metric.value,
+                  status: metric.status,
+                  highlight: metric.highlight
+                });
+              }) : null
             )
           );
         })
