@@ -1,17 +1,26 @@
 import { h } from 'preact';
-import SectionCard from './SectionCard';
+import MetricCard from './MetricCard';
 import { Section } from '../types';
 
-// Dados do dashboard - você pode modificar aqui ou buscar de uma API
 const dashboardData: Section[] = [
   {
-    title: 'PLANO',
+    title: 'SD',
     metrics: [
       { label: 'HIB CONG', value: '01/09', status: 'success' },
       { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
       { label: 'KO INT', value: '05/09', status: 'success' },
       { label: 'KO EXT', value: '07/09', status: 'success' },
-      { label: 'TIME LINE', value: '07/09', status: 'success' }
+      { label: 'TIME LINE', value: '07/09', status: 'success' },
+      { label: 'HIB CONG', value: '01/09', status: 'success' },
+      { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
+      { label: 'KO INT', value: '05/09', status: 'success' },
+      { label: 'KO EXT', value: '07/09', status: 'success' },
+      { label: 'TIME LINE', value: '07/09', status: 'success' },
+      { label: 'HIB CONG', value: '01/09', status: 'success' },
+      { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
+      { label: 'KO INT', value: '05/09', status: 'success' },
+      { label: 'KO EXT', value: '07/09', status: 'success' },
+      { label: 'TIME LINE', value: '07/09', status: 'success' },
     ]
   },
   {
@@ -72,9 +81,34 @@ const dashboardData: Section[] = [
       { label: 'ETAPA 1', value: '12/11', status: 'neutral' },
       { label: 'ETAPA 2', value: '22/11', status: 'neutral' },
       { label: 'ETAPA 3', value: '02/12', status: 'neutral' },
-      { label: 'ETAPA 4', value: '12/12', status: 'neutral' }
+      { label: 'ETAPA 4', value: '12/12', status: 'neutral' },
+      { label: 'ETAPA 5', value: '15/12', status: 'neutral' },
+      { label: 'ETAPA 6', value: '18/12', status: 'neutral' },
+      { label: 'ETAPA 7', value: '20/12', status: 'neutral' },
+      { label: 'ETAPA 8', value: '22/12', status: 'neutral' },
+      { label: 'ETAPA 9', value: '25/12', status: 'neutral' },
+      { label: 'ETAPA 10', value: '28/12', status: 'neutral' },
+      { label: 'ETAPA 11', value: '30/12', status: 'neutral' },
+      { label: 'ETAPA 12', value: '02/01', status: 'neutral' },
+      { label: 'ETAPA 13', value: '05/01', status: 'neutral' },
+      { label: 'ETAPA 14', value: '08/01', status: 'neutral' },
+      { label: 'ETAPA 15', value: '10/01', status: 'neutral' },
+      { label: 'ETAPA 16', value: '12/01', status: 'neutral' }
     ]
   },
+  {
+    title: 'INDICADORES',
+    metrics: [
+      { label: 'Satisf', value: '20/10', status: 'warning' },
+      { label: 'QSMS', value: '20/10', status: 'success' },
+      { label: 'EVOLUÇ OBRA', value: '45%', status: 'neutral' },
+      { label: 'DIAS PENDÊN', value: '123', status: 'neutral' }
+    ]
+  }
+];
+
+// Seções que dividem a última linha
+const splitSections = [
   {
     title: 'RECORRÊNCIAS',
     metrics: [
@@ -91,28 +125,61 @@ const dashboardData: Section[] = [
       { label: 'FECH. FINANC', value: '04/02', status: 'neutral' },
       { label: 'ACEITE DEFIN', value: '05/02', status: 'neutral' }
     ]
-  },
-  {
-    title: 'INDICADORES',
-    metrics: [
-      { label: 'Satisf', value: '20/10', status: 'warning' }, // Smiley Amarelo
-      { label: 'QSMS', value: '20/10', status: 'success' },  // Smiley Verde
-      { label: 'EVOLUÇ OBRA', value: '45%', status: 'neutral' },
-      { label: 'DIAS PENDÊN', value: '123', status: 'neutral' }
-    ]
   }
 ];
 
+// Número fixo de colunas (baseado em OBRA com 22 cards)
+const maxColumns = 22;
+
 function App() {
   return h('div', { class: 'dashboard' },
-    h('div', { class: 'dashboard-grid' },
+    h('div', { class: 'flowchart' },
+      // Linhas normais (6 linhas)
       dashboardData.map((section: Section, index: number) => {
-        return h(SectionCard, {
-          key: index,
-          title: section.title,
-          metrics: section.metrics
-        });
-      })
+        return h('div', { class: 'swimlane', key: index },
+          h('div', { class: 'swimlane-label' },
+            h('span', null, section.title)
+          ),
+          h('div', {
+            class: 'swimlane-cards',
+            style: `grid-template-columns: repeat(${maxColumns}, 1fr)`
+          },
+            section.metrics.map((metric, mIndex) => {
+              return h(MetricCard, {
+                key: mIndex,
+                label: metric.label,
+                value: metric.value,
+                status: metric.status,
+                highlight: metric.highlight
+              });
+            })
+          )
+        );
+      }),
+      // Última linha dividida (RECORRÊNCIAS | ENCERRAMENTO)
+      h('div', { class: 'swimlane swimlane-split' },
+        splitSections.map((section, sIndex) => {
+          return h('div', { class: 'swimlane-half', key: sIndex },
+            h('div', { class: 'swimlane-label' },
+              h('span', null, section.title)
+            ),
+            h('div', {
+              class: 'swimlane-cards',
+              style: `grid-template-columns: repeat(${Math.floor(maxColumns / 2)}, 1fr)`
+            },
+              section.metrics.map((metric, mIndex) => {
+                return h(MetricCard, {
+                  key: mIndex,
+                  label: metric.label,
+                  value: metric.value,
+                  status: metric.status,
+                  highlight: metric.highlight
+                });
+              })
+            )
+          );
+        })
+      )
     )
   );
 }
