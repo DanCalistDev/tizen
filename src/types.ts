@@ -7,6 +7,7 @@ export interface Metric {
   highlight?: boolean;
   headerText?: string;
   hasArrowDown?: boolean;
+  isTitle?: boolean;
 }
 
 export interface Section {

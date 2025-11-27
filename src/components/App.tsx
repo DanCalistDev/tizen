@@ -29,6 +29,7 @@ const gridData: GridRow[] = [
       { col: 10, label: 'RECEB SD', value: '31/10 02/11', status: 'warning' },
       { col: 11, label: 'APROV SD', value: 'PREV 05/11', status: 'success' },
       // INDICADORES - canto direito
+      { col: 18, label: 'INDICADORES', value: '', status: 'neutral', isTitle: true },
       { col: 19, label: 'Satisf', value: '20/10', status: 'warning' },
       { col: 20, label: 'QSMS', value: '20/10', status: 'success' },
       { col: 21, label: 'EVOLUÇ OBRA', value: '45%', status: 'neutral' },
@@ -108,6 +109,7 @@ const gridData: GridRow[] = [
       { col: 3, label: 'R.SEM CLIENTE', value: '22/09', status: 'success' },
       { col: 4, label: 'COM. SEM.', value: '22/09', status: 'success' },
       // ENCERRAMENTO - canto direito
+      { col: 17, label: 'ENCERRAMENTO', value: '', status: 'neutral', isTitle: true },
       { col: 18, label: 'ACEITE PROV', value: '31/01', status: 'neutral' },
       { col: 19, label: 'EMISS BOOK', value: '04/02', status: 'neutral' },
       { col: 20, label: 'FECH. FINANC', value: '04/02', status: 'neutral' },
@@ -171,14 +173,20 @@ function App() {
                 style: `grid-column: ${card.col}`,
                 key: cardIndex
               },
-                h(MetricCard, {
-                  label: card.label,
-                  value: card.value,
-                  status: card.status,
-                  highlight: card.highlight,
-                  headerText: card.headerText,
-                  hasArrowDown: card.hasArrowDown
-                })
+                card.isTitle ? (
+                  h('div', { class: 'title-card' },
+                    h('span', null, card.label)
+                  )
+                ) : (
+                  h(MetricCard, {
+                    label: card.label,
+                    value: card.value,
+                    status: card.status,
+                    highlight: card.highlight,
+                    headerText: card.headerText,
+                    hasArrowDown: card.hasArrowDown
+                  })
+                )
               );
             })
           )
