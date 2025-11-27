@@ -15,7 +15,7 @@ const firstRowBlocks: HeaderBlock[] = [
     metrics: [
       { label: 'HIB CONG', value: '01/09', status: 'success' },
       { label: 'CON TRATO', value: 'PREV 10/09', status: 'danger', highlight: true },
-      { label: 'KO INT', value: '05/09', status: 'success' },
+      { label: 'KO INT', value: '05/09', status: 'success', hasArrowDown: true },
       { label: 'KO EXT', value: '07/09', status: 'success', hasArrowDown: true },
       { label: 'TIME LINE', value: '07/09', status: 'success', headerText: 'PLANO' },
     ]
@@ -77,6 +77,7 @@ const dashboardData: Section[] = [
   },
   {
     title: 'PROJ. TÉCN',
+    startColumn: 3, // Começa na coluna 3 (alinhado com KO INT)
     metrics: [
       { label: 'PJ TEC CONTR', value: '07/09', status: 'warning' },
       { label: 'TIME LINE', value: '07/09', status: 'success' },

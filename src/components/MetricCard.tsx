@@ -27,13 +27,19 @@ function MetricCard(props: MetricCardProps) {
     classes += ' highlight';
   }
 
-  return h('div', { class: 'metric-card-wrapper' },
+  if (props.headerText) {
+    classes += ' has-header';
+  }
+
+  if (props.hasArrowDown) {
+    classes += ' has-arrow-down';
+  }
+
+  return h('div', { class: classes },
     props.headerText ? h('div', { class: 'metric-header-text' }, props.headerText) : null,
-    h('div', { class: classes },
-      h('div', { class: 'metric-label' }, props.label),
-      h('div', { class: 'metric-value' }, props.value)
-    ),
-    props.hasArrowDown ? h('div', { class: 'arrow-down' }, '↓') : null
+    h('div', { class: 'metric-label' }, props.label),
+    h('div', { class: 'metric-value' }, props.value),
+    props.hasArrowDown ? h('div', { class: 'arrow-down' }, '│\n│\n↓') : null
   );
 }
 
