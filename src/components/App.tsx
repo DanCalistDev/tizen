@@ -2,7 +2,8 @@ import { h } from 'preact';
 import MetricCard from './MetricCard';
 import { Section } from '../types';
 
-const dashboardData: Section[] = [
+// Primeira linha dividida: SD | INDICADORES
+const firstRowSections = [
   {
     title: 'SD',
     metrics: [
@@ -23,6 +24,19 @@ const dashboardData: Section[] = [
       { label: 'TIME LINE', value: '07/09', status: 'success' },
     ]
   },
+  {
+    title: 'INDICADORES',
+    metrics: [
+      { label: 'Satisf', value: '20/10', status: 'warning' },
+      { label: 'QSMS', value: '20/10', status: 'success' },
+      { label: 'EVOLUÇ OBRA', value: '45%', status: 'neutral' },
+      { label: 'DIAS PENDÊN', value: '123', status: 'neutral' }
+    ]
+  }
+];
+
+// Linhas do meio (5 linhas)
+const dashboardData: Section[] = [
   {
     title: 'ARQUITETURA',
     metrics: [
@@ -95,20 +109,11 @@ const dashboardData: Section[] = [
       { label: 'ETAPA 15', value: '10/01', status: 'neutral' },
       { label: 'ETAPA 16', value: '12/01', status: 'neutral' }
     ]
-  },
-  {
-    title: 'INDICADORES',
-    metrics: [
-      { label: 'Satisf', value: '20/10', status: 'warning' },
-      { label: 'QSMS', value: '20/10', status: 'success' },
-      { label: 'EVOLUÇ OBRA', value: '45%', status: 'neutral' },
-      { label: 'DIAS PENDÊN', value: '123', status: 'neutral' }
-    ]
   }
 ];
 
-// Seções que dividem a última linha
-const splitSections = [
+// Última linha dividida: RECORRÊNCIAS | ENCERRAMENTO
+const lastRowSections = [
   {
     title: 'RECORRÊNCIAS',
     metrics: [
@@ -134,7 +139,31 @@ const maxColumns = 22;
 function App() {
   return h('div', { class: 'dashboard' },
     h('div', { class: 'flowchart' },
-      // Linhas normais (6 linhas)
+      // Primeira linha dividida (SD | INDICADORES)
+      h('div', { class: 'swimlane swimlane-split' },
+        firstRowSections.map((section, sIndex) => {
+          return h('div', { class: 'swimlane-half', key: sIndex },
+            h('div', { class: 'swimlane-label' },
+              h('span', null, section.title)
+            ),
+            h('div', {
+              class: 'swimlane-cards',
+              style: `grid-template-columns: repeat(${Math.floor(maxColumns / 2)}, 1fr)`
+            },
+              section.metrics.map((metric, mIndex) => {
+                return h(MetricCard, {
+                  key: mIndex,
+                  label: metric.label,
+                  value: metric.value,
+                  status: metric.status,
+                  highlight: metric.highlight
+                });
+              })
+            )
+          );
+        })
+      ),
+      // Linhas do meio (4 linhas)
       dashboardData.map((section: Section, index: number) => {
         return h('div', { class: 'swimlane', key: index },
           h('div', { class: 'swimlane-label' },
@@ -158,7 +187,7 @@ function App() {
       }),
       // Última linha dividida (RECORRÊNCIAS | ENCERRAMENTO)
       h('div', { class: 'swimlane swimlane-split' },
-        splitSections.map((section, sIndex) => {
+        lastRowSections.map((section, sIndex) => {
           return h('div', { class: 'swimlane-half', key: sIndex },
             h('div', { class: 'swimlane-label' },
               h('span', null, section.title)

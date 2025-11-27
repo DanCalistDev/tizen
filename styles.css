@@ -30,7 +30,6 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 2px;
 }
 
 .swimlane {
@@ -40,12 +39,20 @@ body {
   background: #16213e;
   border-radius: 4px;
   overflow: hidden;
+  margin-bottom: 2px;
+}
+
+.swimlane:last-child {
+  margin-bottom: 0;
 }
 
 .swimlane-split {
   display: flex;
-  gap: 2px;
   background: transparent;
+}
+
+.swimlane-split .swimlane-half:first-child {
+  margin-right: 2px;
 }
 
 .swimlane-half {
@@ -82,7 +89,6 @@ body {
   display: grid;
   align-items: stretch;
   padding: 2px;
-  gap: 2px;
 }
 
 /* Metric Cards */
@@ -90,6 +96,7 @@ body {
   background: #0f3460;
   border-radius: 4px;
   padding: 4px;
+  margin: 1px;
   text-align: center;
   border: 2px solid transparent;
   display: flex;
